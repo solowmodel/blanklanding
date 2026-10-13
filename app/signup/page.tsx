@@ -1,36 +1,11 @@
 'use client';
 
 import Link from "next/link";
-import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 export default function SignupPage() {
-  const [submitted, setSubmitted] = useState(false);
-  const [formData, setFormData] = useState({ name: '', phone: '' });
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    try {
-      const res = await fetch('/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({
-          'form-name': 'contact',
-          name: formData.name,
-          phone: formData.phone,
-        }).toString(),
-      });
-
-      if (res.ok) {
-        setSubmitted(true);
-      } else {
-        alert('Form submission failed. Please try again.');
-      }
-    } catch (err) {
-      console.error(err);
-      alert('An error occurred. Please try again.');
-    }
-  };
+  const searchParams = useSearchParams();
+  const submitted = searchParams.get('success') === 'true';
 
   return (
     <main className="min-h-screen w-full bg-[#d4ff36] text-zinc-950 flex flex-col items-center justify-center p-4">
@@ -46,22 +21,29 @@ export default function SignupPage() {
         {/* Form Card */}
         <div className="w-full bg-zinc-900 border border-zinc-800 rounded-2xl p-6 shadow-2xl text-white mb-4">
           <h2 className="text-lg font-bold mb-1">Join the Event</h2>
-          <p className="text-xs text-zinc-400 mb-4">Enter your details to lock in your spot.</p>
+          <p className="text-xs text-zinc-400 mb-4">Enter your details and we will let you know if we need help.</p>
 
           {submitted ? (
             <div className="py-8 text-center text-[#d4ff36] font-semibold text-sm">
-              You&apos;re all set! See you there.
+              Thank you for being of service, we will reach out if we need the help!
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
+            /* Native Netlify Form: Netlify edge intercepts method="POST" automatically */
+            <form 
+              name="contact" 
+              method="POST" 
+              action="/signup?success=true" 
+              className="space-y-4"
+            >
+              {/* Hidden field required for Netlify multi-page detection */}
+              <input type="hidden" name="form-name" value="contact" />
+              
               <div>
                 <label className="block text-xs text-zinc-400 mb-1">Name</label>
                 <input
                   type="text"
                   name="name"
                   required
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-[#d4ff36]"
                   placeholder="Your full name"
                 />
@@ -72,8 +54,6 @@ export default function SignupPage() {
                   type="tel"
                   name="phone"
                   required
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-[#d4ff36]"
                   placeholder="(555) 000-0000"
                 />
