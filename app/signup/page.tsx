@@ -53,10 +53,7 @@ export default function SignupPage() {
               You&apos;re all set! See you there.
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-4" name="contact" data-netlify="true">
-              {/* Hidden input for Netlify form detection on AJAX submissions */}
-              <input type="hidden" name="form-name" value="contact" />
-              
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-xs text-zinc-400 mb-1">Name</label>
                 <input
