@@ -1,30 +1,48 @@
 'use client';
 
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
+import { useState, Suspense } from "react";
 
 function SignupForm() {
-  const searchParams = useSearchParams();
-  const submitted = searchParams.get('success') === 'true';
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      // CRITICAL: Must post to "/" as specified in Netlify's AJAX documentation
+      const res = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData as any).toString(),
+      });
+
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        alert('Form submission failed. Please try again.');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('An error occurred. Please try again.');
+    }
+  };
 
   return (
     <div className="w-full bg-zinc-900 border border-zinc-800 rounded-2xl p-6 shadow-2xl text-white mb-4">
-      <h2 className="text-lg font-bold mb-1">Volunteer</h2>
-      <p className="text-xs text-zinc-400 mb-4">Get onto the volunteer list and if we need help, we will reach out!</p>
+      <h2 className="text-lg font-bold mb-1">Join the Event</h2>
+      <p className="text-xs text-zinc-400 mb-4">Enter your details to lock in your spot.</p>
 
       {submitted ? (
         <div className="py-8 text-center text-[#d4ff36] font-semibold text-sm">
           Thank you for being of service, we will reach out if we need the help!
         </div>
       ) : (
-        <form 
-          name="contact" 
-          method="POST" 
-          action="/signup?success=true" 
-          className="space-y-4"
-        >
-          {/* Hidden field required for Netlify form detection */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Required hidden input for Netlify JS-rendered/AJAX forms */}
           <input type="hidden" name="form-name" value="contact" />
           
           <div>
@@ -71,7 +89,6 @@ export default function SignupPage() {
           </Link>
         </div>
 
-        {/* Wrapped in Suspense to satisfy Next.js static generation requirements */}
         <Suspense fallback={<div className="w-full bg-zinc-900 rounded-2xl p-6 text-white text-center">Loading...</div>}>
           <SignupForm />
         </Suspense>
