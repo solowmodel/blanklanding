@@ -1,12 +1,13 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="h-[100dvh] w-full bg-[#d4ff36] text-zinc-950 flex flex-col items-center justify-center p-2 sm:p-4 overflow-hidden">
-      <div className="w-full max-w-md h-full max-h-[720px] flex flex-col items-center justify-between pt-0 px-4 pb-4 sm:px-5 sm:pb-5 bg-[#d4ff36] rounded-3xl">
+    <main className="min-h-screen w-full bg-[#d4ff36] text-zinc-950 flex flex-col items-center justify-center p-4">
+      <div className="w-full max-w-md flex flex-col items-center justify-between py-6 px-4 bg-[#d4ff36] rounded-3xl">
         
-        {/* Top Section: Logo & Subtitle - pulled up higher */}
-        <div className="w-full flex flex-col items-center -mt-2 sm:-mt-12">
+        {/* Top Section: Logo */}
+        <div className="w-full flex flex-col items-center mb-6">
           <div className="w-full flex justify-center">
             <Image
               src="/fs.png"
@@ -19,8 +20,8 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Event Details - Aligned to the Left */}
-        <div className="w-full flex flex-col items-start text-left gap-1.5 sm:gap-2 text-xs sm:text-sm font-bold text-zinc-950 px-2 my-1">
+        {/* Event Details */}
+        <div className="w-full flex flex-col items-start text-left gap-2 text-sm font-bold text-zinc-950 px-2 mb-8">
           <p>
             <span className="font-normal text-zinc-800">WHEN:</span> OCT 18 | 2:30pm - 5pm
           </p>
@@ -33,17 +34,17 @@ export default function Home() {
         </div>
 
         {/* Call to Action Section */}
-        <div className="w-full flex flex-col items-center px-2 my-1">
-          <button className="w-full bg-black text-white py-3 px-6 rounded-xl font-bold text-sm sm:text-base tracking-wide hover:bg-zinc-800 transition-colors shadow-md">
+        <div className="w-full flex flex-col items-center px-2 mb-4">
+          <Link 
+            href="/signup"
+            className="w-full text-center bg-black text-white py-4 px-6 rounded-xl font-bold text-base tracking-wide active:scale-95 transition-transform shadow-lg cursor-pointer touch-manipulation"
+          >
             I&apos;M IN! SIGN UP NOW
-          </button>
-          <p className="text-[10px] sm:text-[11px] text-zinc-800 mt-1 italic">
+          </Link>
+          <p className="text-xs text-zinc-800 mt-2 italic">
             *Name and phone required on next step*
           </p>
         </div>
-
-        {/* Footer */}
-
 
       </div>
     </main>
