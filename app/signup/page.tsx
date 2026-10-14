@@ -33,15 +33,15 @@ function SignupForm() {
 
   return (
     <div className="w-full bg-zinc-900 border border-zinc-800 rounded-2xl p-6 shadow-2xl text-white mb-4">
-      <h2 className="text-lg font-bold mb-1">Join the Event</h2>
-      <p className="text-xs text-zinc-400 mb-4">Enter your details to lock in your spot.</p>
+      <h2 className="text-lg font-bold mb-1">I am want ot be OF SERVICE!</h2>
+      <p className="text-xs text-zinc-400 mb-4">.</p>
 
       {submitted ? (
         <div className="py-8 text-center text-[#d4ff36] font-semibold text-sm">
           Thank you for being of service, we will reach out if we need the help!
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-4" data-netlify="true">
+        <form onSubmit={handleSubmit} name="volunteers" className="space-y-4" data-netlify="true">
           {/* Required hidden input for Netlify JS-rendered/AJAX forms */}
           <input type="hidden" name="form-name" value="contact" />
           
