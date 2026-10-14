@@ -41,7 +41,7 @@ function SignupForm() {
           Thank you for being of service, we will reach out if we need the help!
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4" data-netlify="true">
           {/* Required hidden input for Netlify JS-rendered/AJAX forms */}
           <input type="hidden" name="form-name" value="contact" />
           
