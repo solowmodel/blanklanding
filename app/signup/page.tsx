@@ -13,7 +13,6 @@ function SignupForm() {
     const formData = new FormData(form);
 
     try {
-      // CRITICAL: Post to the static HTML file for Next.js Netlify deployments
       const res = await fetch('/__forms.html', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -34,6 +33,7 @@ function SignupForm() {
   return (
     <div className="w-full bg-zinc-900 border border-zinc-800 rounded-2xl p-6 shadow-2xl text-white mb-4">
       <h2 className="text-lg font-bold mb-1">I want to be OF SERVICE!</h2>
+      <p className="text-xs text-zinc-400 mb-4">.</p>
 
       {submitted ? (
         <div className="py-8 text-center text-[#d4ff36] font-semibold text-sm">
@@ -41,7 +41,7 @@ function SignupForm() {
         </div>
       ) : (
         <form onSubmit={handleSubmit} name="volunteers" className="space-y-4" data-netlify="true">
-          {/* Must match the name="volunteers" on the form tag */}
+          {/* FIXED: value must match name="volunteers" exactly */}
           <input type="hidden" name="form-name" value="volunteers" />
           
           <div>
